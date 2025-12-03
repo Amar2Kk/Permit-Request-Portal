@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    direction: rtl;
+  }
+
+  body {
+    @apply font-sans bg-gray-50 text-gray-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  /* Saudi Design System Button Styles */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200 inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus:ring-4 focus:ring-primary-200;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400 focus:ring-4 focus:ring-gray-100;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-50 active:bg-primary-100 focus:ring-4 focus:ring-primary-200;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all;
+  }
+
+  .input-error {
+    @apply border-danger-500 focus:ring-danger-500;
+  }
+
+  /* Card Styles - Saudi Design System */
+  .card {
+    @apply bg-white rounded-lg border border-gray-200 shadow-sm px-5 py-4;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-pending {
+    @apply bg-warning-100 text-warning-600;
+  }
+
+  .badge-approved {
+    @apply bg-success-100 text-success-600;
+  }
+
+  .badge-rejected {
+    @apply bg-danger-100 text-danger-600;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+

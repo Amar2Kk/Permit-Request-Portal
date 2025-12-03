@@ -1,0 +1,37 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Documents
+*.md text
+*.txt text
+
+# Scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Source code
+*.js text
+*.ts text
+*.vue text
+*.css text
+*.scss text
+*.json text
+*.yml text
+*.yaml text
+
+# Docker
+Dockerfile text
+.dockerignore text
+
+# Git
+.gitattributes text
+.gitignore text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+

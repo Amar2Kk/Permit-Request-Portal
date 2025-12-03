@@ -1,0 +1,80 @@
+services:
+    # PostgreSQL Database
+    postgres:
+        image: postgres:14-alpine
+        container_name: permit-portal-db
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: permit_portal
+        ports:
+            - "5433:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - permit-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    # NestJS Backend
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+            target: development
+        container_name: permit-portal-backend
+        restart: unless-stopped
+        environment:
+            DATABASE_URL: postgresql://postgres:postgres@postgres:5432/permit_portal?schema=public
+            BACKEND_PORT: 3001
+            NODE_ENV: development
+            FRONTEND_URL: http://localhost:3000
+        ports:
+            - "3001:3001"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        volumes:
+            - ./backend/src:/app/src:ro
+            - ./backend/prisma:/app/prisma:ro
+        networks:
+            - permit-network
+
+    # Nuxt Frontend
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+            target: development
+        container_name: permit-portal-frontend
+        restart: unless-stopped
+        environment:
+            BACKEND_BASE_URL: http://backend:3001
+            NUXT_HOST: 0.0.0.0
+            NUXT_PORT: 3000
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        volumes:
+            - ./frontend/pages:/app/pages:ro
+            - ./frontend/components:/app/components:ro
+            - ./frontend/layouts:/app/layouts:ro
+            - ./frontend/composables:/app/composables:ro
+            - ./frontend/assets:/app/assets:ro
+            - ./frontend/server:/app/server:ro
+            - ./frontend/types:/app/types:ro
+        networks:
+            - permit-network
+
+volumes:
+    postgres_data:
+        driver: local
+
+networks:
+    permit-network:
+        driver: bridge
