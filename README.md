@@ -1,5 +1,7 @@
 # 🏛️ Permit Request Service Portal
 
+![Permit Request Portal Banner](./Banner.png)
+
 A simple monorepo for a **Permit Request Service Portal**:
 
 -   **Frontend**: Nuxt 4 (RTL, Saudi National Design System)
