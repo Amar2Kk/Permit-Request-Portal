@@ -9,14 +9,19 @@ A simple monorepo for a **Permit Request Service Portal**:
 
 Citizens can submit permit applications, and an admin can view and update their status (Pending, Approved, Rejected). All frontend API calls go through Nuxt Server Routes which proxy to the NestJS backend.
 
+## 🔄 High-Level Flow Diagram
+
+![Permit Request Portal Flow](./flow-diagram.svg)
+
 ---
 
 ## 🐳 Run with Docker Compose
 
 ## 📦 Prerequisites
-- **Docker**: v20.x or higher
-- **Docker Compose**: v2.x or higher
-- **Git**: Latest version
+
+-   **Docker**: v20.x or higher
+-   **Docker Compose**: v2.x or higher
+-   **Git**: Latest version
 
 ### 1. Clone the repository
 
