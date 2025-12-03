@@ -21,7 +21,9 @@
 
     <!-- Empty State -->
     <div v-else-if="!applications || applications.length === 0" class="card text-center py-12">
-      <div class="text-6xl mb-4">📋</div>
+      <div class="flex justify-center mb-4 text-gray-400">
+        <span class="w-16 h-16 flex items-center justify-center" v-html="processSvg(clipboardIcon)" />
+      </div>
       <h3 class="text-xl font-semibold text-gray-900 mb-2">
         لا توجد طلبات
       </h3>
@@ -37,11 +39,7 @@
 
     <!-- Applications List -->
     <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      <UiCard
-        v-for="application in applications"
-        :key="application.id"
-        hover
-      >
+      <UiCard v-for="application in applications" :key="application.id" hover>
         <div class="space-y-3">
           <div class="flex items-start justify-between">
             <h3 class="text-lg font-semibold text-gray-900">
@@ -51,18 +49,18 @@
               {{ getStatusLabel(application.application_status) }}
             </UiBadge>
           </div>
-          
+
           <div class="space-y-2 text-sm">
             <div class="flex items-center gap-2 text-gray-600">
               <span class="font-medium">البريد الإلكتروني:</span>
               <span>{{ application.applicant_email }}</span>
             </div>
-            
+
             <div class="flex items-center gap-2 text-gray-600">
               <span class="font-medium">نوع التصريح:</span>
               <span>{{ application.permit_type }}</span>
             </div>
-            
+
             <div class="flex items-center gap-2 text-gray-500 text-xs">
               <span class="font-medium">تاريخ التقديم:</span>
               <span>{{ formatDate(application.submitted_at) }}</span>
@@ -76,8 +74,17 @@
 
 <script setup lang="ts">
 import type { PermitApplication } from '~/types'
+import clipboardIcon from '~/assets/icons/Clipboard.svg?raw'
 
 const { getStatusLabel } = usePermits()
+
+// Helper function to process SVG for proper sizing
+function processSvg(svgContent: string, size: string = '100%'): string {
+  return svgContent
+    .replace(/width="[^"]*"/g, `width="${size}"`)
+    .replace(/height="[^"]*"/g, `height="${size}"`)
+    .replace(/<svg/, '<svg class="w-full h-full"')
+}
 
 // Fetch applications
 const { data: applications, pending, error } = await useAsyncData<PermitApplication[]>(
@@ -105,4 +112,3 @@ function formatDate(dateString: string): string {
   }).format(date)
 }
 </script>
-

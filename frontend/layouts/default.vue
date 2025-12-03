@@ -1,7 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import plusIcon from '~/assets/icons/Plus.svg?raw'
+import menuIcon from '~/assets/icons/Menu.svg?raw'
+import errorIcon from '~/assets/icons/Error.svg?raw'
 
 const mobileMenuOpen = ref(false)
+
+// Helper function to process SVG for proper sizing
+function processSvg(svgContent: string, size: string = '100%'): string {
+  return svgContent
+    .replace(/width="[^"]*"/g, `width="${size}"`)
+    .replace(/height="[^"]*"/g, `height="${size}"`)
+    .replace(/<svg/, '<svg class="w-full h-full"')
+}
 </script>
 
 <template>
@@ -38,21 +49,17 @@ const mobileMenuOpen = ref(false)
             <div class="w-px h-6 bg-white/20 mx-1"></div>
             <NuxtLink to="/apply"
               class="px-6 py-2.5 text-sm font-bold text-primary-600 bg-white hover:bg-gray-50 rounded-md transition-all shadow-md hover:shadow-lg flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-              </svg>
+              <span class="w-4 h-4 flex items-center justify-center flex-shrink-0" v-html="processSvg(plusIcon)" />
               تقديم طلب جديد
             </NuxtLink>
           </div>
 
           <!-- Mobile Menu Button -->
           <button @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden p-2 text-white hover:bg-white/10 rounded-md transition-all">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16" />
-              <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            class="md:hidden p-2 text-white hover:bg-white/10 rounded-md transition-all flex items-center justify-center">
+            <span v-if="!mobileMenuOpen" class="w-6 h-6 flex items-center justify-center"
+              v-html="processSvg(menuIcon)" />
+            <span v-else class="w-6 h-6 flex items-center justify-center" v-html="processSvg(errorIcon)" />
           </button>
         </div>
 
@@ -74,9 +81,7 @@ const mobileMenuOpen = ref(false)
               </NuxtLink>
               <NuxtLink to="/apply" @click="mobileMenuOpen = false"
                 class="px-4 py-2.5 text-sm font-bold text-primary-600 bg-white hover:bg-gray-50 rounded-md transition-all text-center shadow-md flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-                </svg>
+                <span class="w-4 h-4 flex items-center justify-center flex-shrink-0" v-html="processSvg(plusIcon)" />
                 تقديم طلب جديد
               </NuxtLink>
             </div>
